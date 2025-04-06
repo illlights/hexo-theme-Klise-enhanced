@@ -1,12 +1,6 @@
 # 使用文档
 ## 说明
 
-<<<<<<< HEAD
-Tranplant from [Jekyll theme Klisé](https://github.com/piharpi/jekyll-klise) and do some modifies
-
-![klise](https://cdn.jsdelivr.net/gh/dewjohn/CDN@latest/images/allpages.png)
-
-=======
 本主题是根据dewjonh的hexo主题[Klise](https://github.com/dewjohn/hexo-theme-Klise)改的，我非常喜欢这款主题，但是由于此主题原作者好像不再维护，对hexo的现版本（2024）的适配不太好，于是便自己修修补补用着🙂但是由于我没有太多的精力分配在前端上，所以有些代码可能有些不专业，希望各位大佬见谅并指正。当然如果有任何bug请尽管issue，我会尽力修复！
 
 ## 主题概览
@@ -94,4 +88,3 @@ enjoy！
 ![](Snipaste_2025-04-06_16-18-33.png)
 tags页面 type、layout 为tags。
 categories页面 type、layout 为 categories。
->>>>>>> 4f21178 (第一次提交)
