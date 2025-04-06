@@ -5,11 +5,11 @@
 
 ## 主题概览
 
-![](Snipaste_2025-04-06_15-26-39.png)
+![](https://im.godmao.top/posts/20333/Snipaste_2025-04-06_15-26-39.png)
 
-![](Snipaste_2025-04-06_15-27-19.png)
+![](https://im.godmao.top/posts/20333/Snipaste_2025-04-06_15-27-19.png)
 
-![](Snipaste_2025-04-06_15-27-54.png)
+![](https://im.godmao.top/posts/20333/Snipaste_2025-04-06_15-27-54.png)
 
 你可以查看[demo](https://im.godmao.top/)或[我的博客](https://im.godmao.top/)来阅览主题效果。
 
