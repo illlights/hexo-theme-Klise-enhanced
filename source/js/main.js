@@ -1,6 +1,12 @@
-
 (() => {
-  
+  // 初始化主题为 dark（如果用户第一次访问）
+  if (!localStorage.getItem("theme")) {
+    localStorage.setItem("theme", "dark");
+    document.body.setAttribute("data-theme", "dark");
+  } else if (localStorage.getItem("theme") === "dark") {
+    document.body.setAttribute("data-theme", "dark");
+  }
+
   // Theme switch
   const body = document.body;
   const lamp = document.getElementById("mode");
@@ -71,7 +77,6 @@ window.onscroll = function () {
 toTopBtn.addEventListener('click',function(){
   window.scrollTo({ top: 0, behavior: 'smooth' });
 })
-
 
 
 

@@ -6,7 +6,7 @@ body {
   background: 
   /* 使用 linear-gradient 和背景图结合 */
   linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), 
-  url('/img/fuji.png');
+  url('https://api.illlights.com/v1/img');
 }
 
 body[data-theme=dark] {
@@ -14,9 +14,18 @@ body[data-theme=dark] {
   background: 
   /* 使用 linear-gradient 和背景图结合 */
   linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
-  url('/img/fuji.png');/*图片路径，请将图片存放至主题文件夹下的source/img */
+  url('https://api.illlights.com/v1/img');/*图片路径，请将图片存放至主题文件夹下的source/img */
 }
 /*----以上 在此处修改背景图片，可为明暗模式设置不同的背景图片----*/
+
+@media screen and (max-width: 768px) {
+  body, body[data-theme=dark] {
+    /* 让背景图片以宽度为基准自适应，超出高度自动裁切 */
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+  }
+}
 
 ::-webkit-scrollbar {
   width: 0.5rem;
@@ -434,6 +443,34 @@ mark,
   letter-spacing: 0.3px;
   font-style: normal;
 }
+/* 保证菜单项不换行，容器内容可收缩 */
+.trigger-container {
+  display: flex;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+.trigger-container .menu-link {
+  white-space: nowrap;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media screen and (max-width: 768px) {
+  .trigger-container {
+    flex-wrap: wrap; /* 允许换行 */
+    flex-direction: column; /* 垂直排列 */
+    align-items: stretch;   /* 拉伸到100%宽 */
+  }
+  .trigger-container .menu-link {
+    white-space: normal;    /* 允许文本换行 */
+    min-width: 0;
+    overflow: visible;
+    text-overflow: unset;
+    width: 100%;            /* 每个菜单项占满一行 */
+    display: block;
+    box-sizing: border-box;
+  }
+}
 .menu .menu-link:hover {
   opacity: 1;
 }
@@ -593,6 +630,7 @@ mark,
   }
 }
 .post-item .post-item-title {
+  flex: 1;
   margin: 0;
   border: 0;
   padding: 0;
@@ -1703,9 +1741,17 @@ body[data-theme=dark] .archive-post-item{
 }
 
 /* 标签样式 */
-.post-tags {
-  display: inline-block;
-  margin-left: 1rem;
+.post-tags .tag {
+  flex: auto;
+  font-size: 0.8rem;
+  color: #888;
+  margin-right: 0.5rem;
+  text-decoration: none;
+  white-space: nowrap;    /* 不换行，防止断字 */
+  word-break: keep-all;   /* 保持单词整体 */
+  overflow-wrap: normal;
+  display: inline-block;  /* 保证同行显示 */
+  vertical-align: middle;
 }
 
 .post-tags .tag {
@@ -1817,3 +1863,121 @@ body.loaded {
   gap: 1rem;
 }
 /*----------------------------------以上分类页面分列----------------------------*/
+
+/* Friends Page CSS - 友链页面样式 */
+
+/* 卡片容器，使用 Grid 布局 */
+.friends-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    padding-top: 1rem;
+}
+
+/* 友链卡片本身 - 默认（日间）毛玻璃效果 */
+.friends-card {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 16px;
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    
+    /* 日间模式毛玻璃效果 */
+    background: linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.45));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+
+/* 鼠标悬停在卡片上时的效果 */
+.friends-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+/* 朋友头像 */
+.friends-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    flex-shrink: 0;
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    transition: border-color 0.3s ease;
+}
+
+/* 朋友信息容器 */
+.friends-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* 朋友名称 */
+.friends-name {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1a1a1a;
+    transition: color 0.3s ease;
+}
+
+/* 朋友简介 */
+.friends-descr {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #4d4d4d;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+/* ------------------------------------------- */
+/* --- 夜间主题 (Dark Mode) 的毛玻璃效果 --- */
+/* ------------------------------------------- */
+
+/* 当卡片具有 data-theme="dark" 属性时生效 */
+.friends-card[data-theme=dark] {
+    /* 深色背景 */
+    background: linear-gradient(rgba(40, 40, 40, 0.6), rgba(40, 40, 40, 0.5));
+    /* 深色模式下的阴影 */
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    /* 边框改为亮色以突出轮廓 */
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.friends-card[data-theme=dark]:hover {
+    box-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* 夜间模式下的文字颜色 */
+.friends-card[data-theme=dark] .friends-name {
+    color: #f0f0f0;
+}
+
+.friends-card[data-theme=dark] .friends-descr {
+    color: #c0c0c0;
+}
+
+/* 夜间模式下的头像边框 */
+.friends-card[data-theme=dark] .friends-avatar {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+
+/* 移动设备响应式设计 */
+@media (max-width: 768px) {
+    .friends-container {
+        gap: 1rem;
+    }
+}
