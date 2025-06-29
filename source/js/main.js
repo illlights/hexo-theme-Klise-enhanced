@@ -1,11 +1,4 @@
 (() => {
-  // 初始化主题为 dark（如果用户第一次访问）
-  if (!localStorage.getItem("theme")) {
-    localStorage.setItem("theme", "dark");
-    document.body.setAttribute("data-theme", "dark");
-  } else if (localStorage.getItem("theme") === "dark") {
-    document.body.setAttribute("data-theme", "dark");
-  }
 
   // Theme switch
   const body = document.body;
@@ -18,6 +11,48 @@
     item.setAttribute('data-lang',langName);
   })
 
+  // 根据系统偏好自动选择主题
+  const initTheme = () => {
+    const savedTheme = localStorage.getItem("theme");
+    
+    if (savedTheme) {
+      // 如果有保存的主题偏好，使用保存的
+      if (savedTheme === "dark") {
+        body.setAttribute("data-theme", "dark");
+      } else {
+        body.removeAttribute("data-theme");
+      }
+    } else {
+      // 如果没有保存的主题偏好，检查系统偏好
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // 系统偏好暗色主题
+        localStorage.setItem("theme", "dark");
+        body.setAttribute("data-theme", "dark");
+      } else {
+        // 系统偏好亮色主题或不支持检测
+        localStorage.setItem("theme", "dark");
+        body.removeAttribute("data-theme");
+      }
+    }
+  };
+
+  // 监听系统主题变化
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      // 只有在用户没有手动设置主题时才自动切换
+      const savedTheme = localStorage.getItem("theme");
+      if (!savedTheme) {
+        if (e.matches) {
+          localStorage.setItem("theme", "dark");
+          body.setAttribute("data-theme", "dark");
+        } else {
+          localStorage.setItem("theme", "light");
+          body.removeAttribute("data-theme");
+        }
+      }
+    });
+  }
+
   const toggleTheme = (state) => {
     if (state === "dark") {
       localStorage.setItem("theme", "light");
@@ -26,9 +61,12 @@
       localStorage.setItem("theme", "dark");
       body.setAttribute("data-theme", "dark");
     } else {
-      initTheme(state);
+      initTheme();
     }
   };
+
+  // 初始化主题
+  initTheme();
 
   lamp.addEventListener("click", () =>
     toggleTheme(localStorage.getItem("theme"))

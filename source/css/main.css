@@ -3,29 +3,39 @@
 /* 图片路径，请将图片存放至主题文件夹下的source/img */
 body {
   color: #0d122b;
-  background: 
-  /* 使用 linear-gradient 和背景图结合 */
-  linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), 
-  url('https://api.illlights.com/v1/img?err_only=true&minsize=1080');
 }
 
 body[data-theme=dark] {
   color: #c7bebe;
-  background: 
-  /* 使用 linear-gradient 和背景图结合 */
-  linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
-  url('https://api.illlights.com/v1/img?err_only=true&minsize=720');/* docs: https://api.illlights.com */
 }
-/*----以上 在此处修改背景图片，可为明暗模式设置不同的背景图片----*/
 
-@media screen and (max-width: 768px) {
-  body, body[data-theme=dark] {
-    /* 让背景图片以宽度为基准自适应，超出高度自动裁切 */
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
-  }
+/* New pseudo-element for the fixed background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  background: 
+    linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), 
+    url('https://api.illlights.com/v1/img?err_only=true&minsize=720');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
+
+body[data-theme=dark]::before {
+  background: 
+    linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), 
+    url('https://api.illlights.com/v1/img?err_only=true&minsize=720');
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/*----以上 在此处修改背景图片，可为明暗模式设置不同的背景图片----*/
 
 ::-webkit-scrollbar {
   width: 0.5rem;
@@ -92,18 +102,6 @@ body ,body[data-theme=dark]{
   font-feature-settings: "kern" 1;
   font-kerning: normal;
   box-sizing: border-box;
-  
-
-  /* 背景图像居中 */
-  background-position: center center;
-  /* 背景图不平铺 */
-  background-repeat: no-repeat;
-  /* 背景图固定 */
-  background-attachment: fixed;
-  /* 背景图基于容器大小伸缩 */
-  background-size: cover;
-  /* 背景颜色 */
-  /* background-color: #464646; */
 }
 
 
@@ -455,6 +453,7 @@ mark,
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/* 移动设备菜单项换行显示 */
 @media screen and (max-width: 768px) {
   .trigger-container {
     flex-wrap: wrap; /* 允许换行 */
@@ -1942,10 +1941,6 @@ body.loaded {
     transition: color 0.3s ease;
 }
 
-/* ------------------------------------------- */
-/* --- 夜间主题 (Dark Mode) 的毛玻璃效果 --- */
-/* ------------------------------------------- */
-
 /* 当卡片具有 data-theme="dark" 属性时生效 */
 .friends-card[data-theme=dark] {
     /* 深色背景 */
@@ -1981,3 +1976,4 @@ body.loaded {
         gap: 1rem;
     }
 }
+/*----------------------------------以上友链页面样式----------------------------*/
