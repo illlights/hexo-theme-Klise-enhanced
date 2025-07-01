@@ -178,7 +178,6 @@ ol {
 ul,
 ol {
   margin-top: 0;
-  margin-left: 30px;
 }
 
 li {
@@ -296,6 +295,7 @@ blockquote > :last-child {
     max-width: calc(720px - (30px));
     padding-right: 20px;
     padding-left: 20px;
+    margin-top: 50px;
   }
   .wrapper.blurry {
     animation: 0.2s ease-in forwards blur;
@@ -367,6 +367,8 @@ mark,
   border: 0;
 }
 
+/*------------------Navbar----------------------*/
+
 .navbar {
   height: auto;
   max-width: calc(890px - 30px * 2);
@@ -376,6 +378,8 @@ mark,
   margin-left: auto;
   border-bottom: 1px solid #ececec;
   padding: 15px 30px;
+  /* Ensure navbar is above other content */
+  z-index: 1000; /* Increased z-index */
 }
 
 .menu {
@@ -425,6 +429,8 @@ mark,
 }
 .menu .trigger {
   float: right;
+  /* Ensure trigger is above other content */
+  z-index: 1001; /* Increased z-index */
 }
 .menu .menu-trigger {
   display: none;
@@ -484,6 +490,7 @@ mark,
     height: 50px;
     background-color: #fff;
     border-bottom: 1px solid #ececec;
+    z-index: 1000;
   }
   .menu a#mode {
     left: 10px;
@@ -500,7 +507,7 @@ mark,
     padding-bottom: 15px;
     cursor: pointer;
     text-align: center;
-    z-index: 1;
+    z-index: 1001;
   }
   .menu .menu-icon > svg {
     fill: #0d122b;
@@ -528,6 +535,7 @@ mark,
     height: 100vh;
     width: 100%;
     top: 0;
+    z-index: 999;
   }
   .menu .menu-link {
     display: block;
@@ -539,6 +547,25 @@ mark,
     padding: 2px 0;
   }
 }
+
+/* 移动设备菜单项换行显示 */
+@media screen and (max-width: 768px) {
+  .trigger-container {
+    flex-wrap: wrap; /* 允许换行 */
+    flex-direction: column; /* 垂直排列 */
+    align-items: stretch;   /* 拉伸到100%宽 */
+  }
+  .trigger-container .menu-link {
+    white-space: normal;    /* 允许文本换行 */
+    min-width: 0;
+    overflow: visible;
+    text-overflow: unset;
+    width: 100%;            /* 每个菜单项占满一行 */
+    display: block;
+    box-sizing: border-box;
+  }
+}
+/*-------------------以上Navbar-------------------*/
 
 .author {
   margin-top: 6.3rem;
@@ -1845,7 +1872,7 @@ body[data-theme=dark] .archive-post-item:hover {
 
 .post-date {
   display: inline-block;
-  width: 5rem;
+  width: 3rem;
   color: #666;
   font-size: 0.9rem;
 }
@@ -1963,7 +1990,8 @@ body[data-theme=dark] .archive-post-item:hover {
   border-radius: 16px;
   transition: all 0.3s ease;
   padding: 30px;
-  z-index: 1;
+  /* Lowered z-index to allow navbar and trigger to be on top */
+  z-index: 0; 
 }
 
 body[data-theme=dark] .glass-wrapper {
@@ -2491,7 +2519,7 @@ html {
   .friends-container {
     gap: 8px;
     padding: 0 5px;
-    margin-top: 0;
+    margin-top: 50px;
   }
 }
 
@@ -2551,24 +2579,6 @@ html {
     margin-top: 2em;
     margin-bottom: 1em;
     padding: 0 10px;
-  }
-}
-
-/* 移动设备菜单项换行显示 */
-@media screen and (max-width: 768px) {
-  .trigger-container {
-    flex-wrap: wrap; /* 允许换行 */
-    flex-direction: column; /* 垂直排列 */
-    align-items: stretch;   /* 拉伸到100%宽 */
-  }
-  .trigger-container .menu-link {
-    white-space: normal;    /* 允许文本换行 */
-    min-width: 0;
-    overflow: visible;
-    text-overflow: unset;
-    width: 100%;            /* 每个菜单项占满一行 */
-    display: block;
-    box-sizing: border-box;
   }
 }
 /*----------------------------------以上移动设备显示优化----------------------------*/
