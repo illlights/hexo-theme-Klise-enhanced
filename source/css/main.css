@@ -20,7 +20,7 @@ body::before {
   z-index: -1;
   background: 
     linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
-    url('https://api.illlights.com/v1/img?err_only=true&minsize=1080');
+    url('https://api.illlights.com/v1/img?err_only=true&minsize=1080&minbrightness=0.5');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -29,7 +29,7 @@ body::before {
 body[data-theme=dark]::before {
   background: 
     linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-    url('https://api.illlights.com/v1/img?err_only=true&minsize=1080');
+    url('https://api.illlights.com/v1/img?err_only=true&minsize=1080&maxbrightness=0.5');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
