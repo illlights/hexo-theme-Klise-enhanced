@@ -7,11 +7,14 @@
 
 ## 主题概览
 
-![](https://blog.godmao.top/posts/20333/Snipaste_2025-04-06_15-26-39.png)
+<img width="1315" alt="image" src="https://github.com/user-attachments/assets/7c3bdc1e-4e1b-4697-bcd5-2ecd61769932" />
 
-![](https://blog.godmao.top/posts/20333/Snipaste_2025-04-06_15-27-19.png)
+<img width="1315" alt="image" src="https://github.com/user-attachments/assets/0d2bf87f-0b5c-4437-9879-f8ec81047e2e" />
 
-![](https://blog.godmao.top/posts/20333/Snipaste_2025-04-06_15-27-54.png)
+<img width="1315" alt="image" src="https://github.com/user-attachments/assets/9e2b42d0-294f-4313-8c78-612c5a92464b" />
+
+<img width="1315" alt="image" src="https://github.com/user-attachments/assets/0d0ff39b-ea42-46f4-aa98-7a98c3b7664b" />
+
 
 你可以查看[illlights blog](https://blog.illlights.com/)来阅览主题效果。
 
@@ -19,6 +22,7 @@
 
 - 😢把scss全编译为css了，只有一个main.css文件，包含了所有的渲染样式....不过不用担心我注释了🤓
 - 将原主题的深色模式进一步适配，并修改了一些元素的显示风格。
+- 改用随机图片作为背景，随机图使用 https://api.illlights.com/v1/img。
 - 大量使用毛玻璃背景版，提高文字显示效果。
 - 增加页面动画。
 
@@ -47,7 +51,7 @@ git clone https://github.com/g0dmao/hexo-theme-Klise-enhanced.git
 
 将主题根目录的`_config.hexo-theme-Klise-enhanced.yml`移动到博客根目录。你可以打开该文件进行主题的一些配置。
 
-在博客配置文件`_config.yml`中启用主题。
+在博客配置文件`_config.yml`中启用主题。主题设置为`hexo-theme-Klise-enhanced`
 
 ### 最后，
 enjoy！
@@ -87,10 +91,34 @@ enjoy！
 #### hexo-blog-encrypt
 文章加密插件。
 
-## 可能的问题
+### tags、categories、friends页面
+首先创建页面`hexo new page tags`。并在相应页面的`index.md` 里添加type和layout标签：
 
-### tags、categories页面显示不正确
-首先检查页面的路径设置是否正确。若正确则试着在相应页面的`index.md` 里添加type和layout标签：
-![](Snipaste_2025-04-06_16-18-33.png)
 tags页面 type、layout 为tags。
+
 categories页面 type、layout 为 categories。
+
+friends页面 layout 为 friends
+
+friends页面的记录方式如下
+```markdown
+---
+title: 随便写，不会被使用
+date: 随便写，不会被使用
+layout: friends
+---
+
+<ul>
+<li>站点名称</li>
+<li>站点地址</li>
+<li>头像</li>
+<li>简介</li>
+
+<li>站点名称</li>
+<li>站点地址</li>
+<li>头像</li>
+<li>简介</li>
+
+...
+</ul>
+```
