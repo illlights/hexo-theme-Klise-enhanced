@@ -14,14 +14,15 @@
 
 
 
-  <main class="page-content glass-wrapper" aria-label="Content">
+  <main class="page-content" aria-label="Content">
+    <div class="glass-wrapper">
       <header class="header">
         
           <div class="tags">
             <% (page.tags || []).forEach(function(item) { %><a href="<%= url_for(item.path) %>" class="tag"># <%= item.name %></a><% }); %>
           </div>
         
-        <h1 class="header-title" itemprop="headline"><%=page.title%></h1>
+          <h1 class="header-title" itemprop="headline"><%=page.title%></h1>
           <div class="post-meta">
             最后更新: <time><%- date(page.updated, 'MMM DD, YYYY') %></time>
             作者: <span itemprop="author">
@@ -30,9 +31,9 @@
             字数: <span class="post-count"><%= wordcount(page.content) %></span>
             预计阅读时间: <span class="post-count"><%= min2read(page.content) %>min</span> 
           </div>       
-        </header>
+      </header>
           <div class="page-content"><%-page.content%></div>          
           <%-partial('partials/pagination')%>
-
+    </div>
    </main>
 </div>

@@ -1,7 +1,9 @@
 # 使用文档
 ## 说明
 
-本主题是根据dewjonh的hexo主题[Klise](https://github.com/dewjohn/hexo-theme-Klise)改的，我非常喜欢这款主题，但是由于此主题原作者好像不再维护，对hexo的现版本（2024）的适配不太好，于是便自己修修补补用着🙂但是由于我没有太多的精力分配在前端上，所以有些代码可能有些不专业，希望各位大佬见谅并指正。当然如果有任何bug请尽管issue，我会尽力修复！
+本主题是根据 dewjonh 的 hexo 主题 [Klise](https://github.com/dewjohn/hexo-theme-Klise) 改的，为了适应不同种类的背景图片，大量运用毛玻璃效果作为文字背景。此外用 AI 写了一些基础的渐入渐出动画，看起来不那么像一个“静态”网页了。
+
+这个主题继承了两个开发者的代码，css还只有一个，改的地方很可能有冲突。有任何问题欢迎 issue。
 
 ## 主题概览
 
@@ -11,12 +13,16 @@
 
 ![](https://blog.godmao.top/posts/20333/Snipaste_2025-04-06_15-27-54.png)
 
-你可以查看[demo](http://klisedemo.godmao.top/)来阅览主题效果。
+你可以查看[illlights blog](https://blog.illlights.com/)来阅览主题效果。
 
 ## 相较于原版有何改动
 
 - 😢把scss全编译为css了，只有一个main.css文件，包含了所有的渲染样式....不过不用担心我注释了🤓
 - 将原主题的深色模式进一步适配，并修改了一些元素的显示风格。
+- 大量使用毛玻璃背景版，提高文字显示效果。
+- 增加页面动画。
+
+
 ## 使用方法
 
 ### 首先，
