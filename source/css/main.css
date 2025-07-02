@@ -20,7 +20,7 @@ body::before {
   z-index: -1;
   background: 
     linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
-    url('https://api.illlights.com/v1/img?err_only=true&minsize=720');
+    url('https://api.illlights.com/v1/img?err_only=true&minsize=1080');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -28,8 +28,8 @@ body::before {
 
 body[data-theme=dark]::before {
   background: 
-    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-    url('https://api.illlights.com/v1/img?err_only=true&minsize=720');
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+    url('https://api.illlights.com/v1/img?err_only=true&minsize=1080');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -2239,10 +2239,6 @@ body[data-theme=dark] .post-item:hover .post-item-date {
   padding-left: 30px;
   opacity: 0;
   transform: translateY(20px);
-  animation: pageEnter 0.8s ease forwards;
-}
-
-.friends-wrapper {
   animation: pageEnter 0.8s ease forwards;
 }
 

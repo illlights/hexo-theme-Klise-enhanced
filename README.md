@@ -54,7 +54,7 @@ git clone https://github.com/g0dmao/hexo-theme-Klise-enhanced.git
 在博客配置文件`_config.yml`中启用主题。主题设置为`hexo-theme-Klise-enhanced`
 
 ### 最后，
-enjoy！
+请关闭 CloudFlare [Rocket Loader](https://developers.cloudflare.com/speed/optimization/content/rocket-loader/) 功能，它会延迟加载 JavaScript 来提升“首次渲染速度”，这会让暗色主题下切换页面时出现亮色主题闪烁，直到 JS 被加载再恢复到暗色主题。这东西让我以为是我写的 JS 有问题白忙活了两天。
 
 ## 个性化部分
 
