@@ -4,6 +4,7 @@
       <header class="header">
         <h1 class="header-title center">含有标签“<%=page.tag%>”的文章</h1>
       </header>
+      <div class="glass-wrapper">
       <% var last_year = ''; %>
       <% page.posts.each(article => { %>
         <div class="post-item">
@@ -12,5 +13,6 @@
           </a>
         </div>
       <% }) %>
+      </div>
     </div>
 </div>
