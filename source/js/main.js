@@ -1,7 +1,7 @@
 (() => {
 
   // --- DOM 元素选择 ---
-  const body = document.body;
+  const html = document.documentElement;
   const lamp = document.getElementById("mode");
   const cbox = document.getElementById("menu-trigger");
   const toggleButton = document.getElementById('toggleButton');
@@ -18,10 +18,10 @@
   const applyTheme = (theme) => {
     if (theme === "dark") {
       // 设置 data-theme 属性，以便 CSS 可以根据它来应用样式
-      body.setAttribute("data-theme", "dark");
+      html.setAttribute("data-theme", "dark");
     } else {
       // 移除该属性以应用默认的浅色主题
-      body.removeAttribute("data-theme");
+      html.removeAttribute("data-theme");
     }
   };
 
@@ -30,7 +30,7 @@
    */
   const toggleTheme = () => {
     // 通过 body 的 data-theme 属性判断当前主题
-    const currentTheme = body.getAttribute("data-theme") ? "dark" : "light";
+    const currentTheme = html.getAttribute("data-theme") ? "dark" : "light";
     const newTheme = currentTheme === "dark" ? "light" : "dark";
     
     // 将用户的明确选择保存到 localStorage
