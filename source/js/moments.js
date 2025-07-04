@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
         loadMoreLimit: 10,
         excludeReplies: true, // 请不要改这里，还没写好评论部分
         excludeReblogs: false, // 是否允许显示转发内容
+        bangumiApiUrl: 'https://api.bgm.tv/v0/users/illlights/collections?type=2&limit=5&offset=',
+        bangumiLimit:5,
     };
 
     // --- DOM 元素获取 ---
@@ -18,6 +20,39 @@ document.addEventListener('DOMContentLoaded', () => {
     let state = {
         nextPageUrl: null,
         isLoading: false,
+        bangumiOffset: 0,
+        bangumiFinished: false,
+        loadedBangumiDates: new Set(),
+        loadedMastodonDates: new Set(),
+    };
+    /**
+     * 创建 Bangumi 条目的 HTML 结构
+     * @param {object} entry - Bangumi 条目
+     * @returns {HTMLElement}
+     */
+    const createBangumiElement = (entry) => {
+        const post = document.createElement('div');
+        post.className = 'mastodon-post bangumi-post';
+        post.dataset.url = `https://bgm.tv/subject/${entry.subject_id}`;
+        let img = entry.subject.images?.small || '';
+        let name = entry.subject.name_cn || entry.subject.name;
+        let comment = entry.comment ? `<div class="bangumi-comment">${entry.comment}</div>` : '';
+        let date = formatDate(entry.updated_at);
+        post.innerHTML = `
+            <div class="post-content">
+                <span class="post-date">${date}</span>
+                <span class="bangumi-title">在 Bangumi 上完成了《${name}》</span>
+                <div class="bangumi-image-wrap">
+                    <img src="${img}" alt="${name}" loading="lazy" class="bangumi-image"/>
+                </div>
+                ${comment}
+            </div>
+        `;
+        post.addEventListener('click', (e) => {
+            if (e.target.tagName === 'IMG') return;
+            window.open(post.dataset.url, '_blank', 'noopener,noreferrer');
+        });
+        return post;
     };
 
     /**
@@ -148,40 +183,78 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     /**
-     * 从指定的URL获取动态数据并渲染到页面
-     * @param {string} url - 要获取数据的API URL
+     * 拉取 Mastodon 和 Bangumi 数据，合并后渲染
+     * @param {string} mastodonUrl
+     * @param {boolean} isFirstLoad
      */
-    const fetchAndRenderStatuses = async (url) => {
+    const fetchAndRenderTimeline = async (mastodonUrl, isFirstLoad = false) => {
         if (state.isLoading) return;
         state.isLoading = true;
         loadMoreBtn.textContent = '加载中...';
-
+        // 首次加载时先显示 loading 占位符，不要立即清空内容
+        if (isFirstLoad) {
+            timelineContainer.innerHTML = '<div class="timeline-loading">加载中...</div>';
+        }
         try {
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`网络请求失败: ${response.statusText}`);
-            
-            const statuses = await response.json();
-            state.nextPageUrl = parseLinkHeader(response.headers.get('Link'));
-
-            if (statuses.length > 0) {
-                statuses.forEach(status => {
-                    const statusElement = createStatusElement(status);
-                    timelineContainer.appendChild(statusElement);
-                });
+            // 并行请求 Mastodon 和 Bangumi
+            const requests = [fetch(mastodonUrl)];
+            if (!state.bangumiFinished) {
+                requests.push(fetch(config.bangumiApiUrl + state.bangumiOffset));
             }
-
-            if (loadingIndicator) {
-                loadingIndicator.style.display = 'none';
+            const [mastodonRes, bangumiRes] = await Promise.all(requests);
+            // Mastodon
+            let mastodonStatuses = [];
+            if (mastodonRes && mastodonRes.ok) {
+                mastodonStatuses = await mastodonRes.json();
+                state.nextPageUrl = parseLinkHeader(mastodonRes.headers.get('Link'));
             }
-
-            if (state.nextPageUrl) {
+            // Bangumi
+            let bangumiData = { data: [] };
+            if (bangumiRes && bangumiRes.ok) {
+                bangumiData = await bangumiRes.json();
+                // 判断是否到底
+                if (bangumiData.data.length < config.bangumiLimit) state.bangumiFinished = true;
+            } else if (!bangumiRes) {
+                state.bangumiFinished = true;
+            }
+            // 记录已展示的 Bangumi 条目时间，避免重复
+            if (isFirstLoad) state.loadedBangumiDates.clear();
+            bangumiData.data = bangumiData.data.filter(item => {
+                if (state.loadedBangumiDates.has(item.updated_at)) return false;
+                state.loadedBangumiDates.add(item.updated_at);
+                return true;
+            });
+            // 记录已展示的 Mastodon 条目时间，避免重复
+            if (isFirstLoad) state.loadedMastodonDates.clear();
+            mastodonStatuses = mastodonStatuses.filter(item => {
+                if (state.loadedMastodonDates.has(item.created_at)) return false;
+                state.loadedMastodonDates.add(item.created_at);
+                return true;
+            });
+            // 合并并按时间排序
+            const allItems = [
+                ...mastodonStatuses.map(s => ({ type: 'mastodon', data: s, date: s.created_at })),
+                ...bangumiData.data.map(b => ({ type: 'bangumi', data: b, date: b.updated_at })),
+            ].sort((a, b) => new Date(b.date) - new Date(a.date));
+            // 首次加载时替换内容
+            if (isFirstLoad) timelineContainer.innerHTML = '';
+            allItems.forEach(item => {
+                if (item.type === 'mastodon') {
+                    timelineContainer.appendChild(createStatusElement(item.data));
+                } else {
+                    timelineContainer.appendChild(createBangumiElement(item.data));
+                }
+            });
+            if (loadingIndicator) loadingIndicator.style.display = 'none';
+            // 判断是否还有更多
+            if (state.nextPageUrl || !state.bangumiFinished) {
                 loadMoreBtn.style.display = 'block';
             } else {
                 loadMoreBtn.style.display = 'none';
                 noMorePostsPlaceholder.innerHTML = '<p class="no-more-posts">已经没有更多动态了</p>';
             }
         } catch (error) {
-            console.error('获取 Mastodon 动态失败:', error);
+            console.error('获取时间线失败:', error);
             timelineContainer.innerHTML = '<p>动态加载失败，请检查网络或刷新页面。</p>';
         } finally {
             state.isLoading = false;
@@ -193,9 +266,14 @@ document.addEventListener('DOMContentLoaded', () => {
      * 处理“加载更多”按钮的点击事件
      */
     const handleLoadMore = () => {
-        if (state.nextPageUrl) {
-            fetchAndRenderStatuses(state.nextPageUrl);
+        // 优先加载 Mastodon 下一页，否则加载 Bangumi 下一页
+        let mastodonUrl = state.nextPageUrl;
+        if (!mastodonUrl && !state.bangumiFinished) {
+            // Mastodon 没有更多了，但 Bangumi 还有
+            mastodonUrl = config.baseApiUrl + '?limit=0'; // 空请求
         }
+        state.bangumiOffset += config.bangumiLimit;
+        fetchAndRenderTimeline(mastodonUrl, false);
     };
 
     /**
@@ -309,17 +387,29 @@ document.addEventListener('DOMContentLoaded', () => {
     /**
      * 初始化函数
      */
+    // 懒加载滚动处理
+    function handleScrollLazyLoad() {
+        if (state.isLoading) return;
+        const scrollBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 200;
+        if (scrollBottom && (state.nextPageUrl || !state.bangumiFinished)) {
+            handleLoadMore();
+        }
+    }
+
     const init = () => {
         const initialUrl = new URL(config.baseApiUrl);
         initialUrl.searchParams.append('limit', config.initialLimit);
         if (config.excludeReplies) initialUrl.searchParams.append('exclude_replies', 'true');
         if (config.excludeReblogs) initialUrl.searchParams.append('exclude_reblogs', 'true');
-        
-        fetchAndRenderStatuses(initialUrl.toString());
-
+        state.bangumiOffset = 0;
+        state.bangumiFinished = false;
+        // 首次加载用 setTimeout 让主线程先渲染页面
+        setTimeout(() => {
+            fetchAndRenderTimeline(initialUrl.toString(), true);
+        }, 0);
         loadMoreBtn.addEventListener('click', handleLoadMore);
-        // 【新增】使用事件委托来处理所有动态的点击
         timelineContainer.addEventListener('click', handleTimelineClick);
+        window.addEventListener('scroll', handleScrollLazyLoad);
     };
 
     init();
