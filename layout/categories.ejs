@@ -7,7 +7,7 @@
       
         <div class="categories-grid">
             <% site.categories.forEach(function(category) { %>
-              <div class="category-item">
+              <div class="category-item glass-wrapper card-item hover-effect">
                 <a href="<%= url_for(category.path) %>">
                   <%= category.name %> (<%= category.length %>)
                 </a>

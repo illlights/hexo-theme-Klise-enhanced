@@ -25,7 +25,7 @@
 /* --- 时间线核心结构 --- */
 #mastodon-timeline {
   position: relative;
-  padding: 2rem 0 2rem 120px; /* 增加左侧空间以容纳时间显示 */
+  padding: 2rem 0 2rem 10px; /* 取消左侧padding */
 }
 
 /* 左侧时间线 */
@@ -33,7 +33,7 @@
   content: '';
   position: absolute;
   top: 0;
-  left: 110px; /* 时间线位置调整到时间标签右侧 */
+  left: 0; /* 取消左侧空间后，时间线贴齐容器左侧 */
   width: 3px;
   height: 100%;
   background: currentColor; /* 使用当前文字颜色 */
@@ -48,57 +48,30 @@ html[data-theme=dark] #mastodon-timeline::before {
 /* --- 单条动态卡片样式 --- */
 .mastodon-post {
   position: relative;
-  width: calc(100% - 60px); /* 调整卡片宽度，留出更多空间 */
+  width: calc(100% - 40px); /* 减小卡片宽度，让连接点更靠近 */
   max-width: 500px; /* 限制最大宽度，使卡片更窄 */
   margin-bottom: 2.5rem;
   padding: 1.5rem;
   border-radius: 16px;
   transition: all 0.3s ease;
   cursor: pointer;
-  margin-left: 60px; /* 增加左边距 */
-
-  /* 与友链一致的毛玻璃效果 (日间模式) */
-  background: linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.45));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  margin-left: 40px;
 
   /* 加载动画 */
   opacity: 0;
   transform: translateY(20px) translateX(30px);
   animation: slideInRight 0.6s ease forwards;
-  animation-fill-mode: forwards; /* 确保动画结束状态保持 */
+  animation-fill-mode: forwards;
 }
 
-/* 鼠标悬停在卡片上时的效果 */
-.mastodon-post:hover {
-  transform: translateY(-6px) !important;
-  box-shadow: 0 12px 32px 0 rgba(31, 38, 135, 0.15) !important;
-  background: linear-gradient(rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.55)) !important;
-  border-color: rgba(255, 255, 255, 0.35) !important;
-}
 
-/* 毛玻璃效果 (夜间模式) */
-html[data-theme=dark] .mastodon-post {
-  background: linear-gradient(rgba(40, 40, 40, 0.6), rgba(40, 40, 40, 0.5));
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-}
-
-html[data-theme=dark] .mastodon-post:hover {
-  transform: translateY(-6px) !important;
-  box-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.37) !important;
-  background: linear-gradient(rgba(50, 50, 50, 0.7), rgba(45, 45, 45, 0.6)) !important;
-  border-color: rgba(255, 255, 255, 0.25) !important;
-}
 
 /* --- 时间线连接点 --- */
 .mastodon-post::after {
   content: '';
   position: absolute;
   top: 1.5rem; /* 调整到卡片内容位置 */
-  left: -80px; /* 调整连接点位置到时间线上 */
+  left: -60px; /* 调整连接点位置，更靠近卡片 */
   width: 14px;
   height: 14px;
   border-radius: 50%;
@@ -112,24 +85,6 @@ html[data-theme=dark] .mastodon-post:hover {
 html[data-theme=dark] .mastodon-post::after {
   background: #2c2c2c;
   opacity: 0.9;
-}
-
-/* --- 连接线箭头 --- */
-.mastodon-post::before {
-  content: '';
-  position: absolute;
-  top: 1.7rem; /* 调整到卡片内容位置 */
-  left: -66px; /* 调整箭头位置 */
-  width: 0;
-  height: 0;
-  border-style: solid;
-  border-width: 8px 0 8px 12px;
-  border-color: transparent transparent transparent rgba(255, 255, 255, 0.55);
-  z-index: 1;
-}
-
-html[data-theme=dark] .mastodon-post::before {
-  border-color: transparent transparent transparent rgba(40, 40, 40, 0.6);
 }
 
 /* --- 动态内容样式 --- */
@@ -284,7 +239,6 @@ html[data-theme=dark] .post-content a:hover {
   font-size: 1.5em;
   font-weight: bold;
   border-radius: 8px;
-  backdrop-filter: blur(2px);
 }
 
 /* 降级支持 - 当浏览器不支持 :has() 选择器时 */
@@ -309,6 +263,7 @@ html[data-theme=dark] .post-content a:hover {
   cursor: pointer;
   display: block;
   border: none; /* 完全移除边框 */
+  padding-bottom: 1rem;
 }
 
 /* 确保移除所有可能的图片边框和轮廓 */
@@ -464,41 +419,32 @@ html[data-theme=dark] .media-attachments img:hover {
 /* --- 响应式设计 (手机端) --- */
 @media (max-width: 768px) {
   #moments-page {
-    padding: 1rem 0.5rem;
+    padding: 0rem 0.5rem;
   }
   
   #mastodon-timeline {
-    padding-left: 80px; /* 手机端调整左侧空间 */
-  }
-  
-  #mastodon-timeline::before { 
-    left: 60px; /* 调整时间线位置 */
+    padding: 0rem 0; /* 移除左侧padding */
   }
   
   .mastodon-post {
-    width: calc(100% - 40px);
+    width: calc(100%); /* 考虑到父容器的padding，避免溢出 */
     max-width: none; /* 移除最大宽度限制 */
-    margin-left: 30px;
+    margin-left: 0; /* 移除左边距 */
+    margin-right: 0; /* 确保右边距为0 */
     padding: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    box-sizing: border-box; /* 确保padding包含在宽度内 */
   }
   
+  /* 移动端完全隐藏时间线和连接点 */
+  #mastodon-timeline::before {
+    display: none;
+  }
   .mastodon-post::after { 
-    left: -60px;
-    width: 12px;
-    height: 12px;
-    border-width: 3px;
-    top: 1.2rem; /* 移动端调整到卡片内容位置 */
+    display: none;
   }
-  
   .mastodon-post::before {
-    left: -46px;
-    border-width: 6px 0 6px 10px;
-    top: 1.4rem; /* 移动端调整到卡片内容位置 */
-  }
-  
-  html[data-theme=dark] .mastodon-post::before {
-    border-color: transparent transparent transparent rgba(40, 40, 40, 0.6);
+    display: none;
   }
   
   .media-attachments {
@@ -752,13 +698,6 @@ html[data-theme=dark] .moments-description {
 }
 
 /* 转发内容样式 */
-.reblog-post {
-  border-left: 4px solid #1DA1F2; /* 蓝色边框标识转发 */
-}
-
-html[data-theme=dark] .reblog-post {
-  border-left-color: #1DA1F2;
-}
 
 .reblog-header {
   display: flex;

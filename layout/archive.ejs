@@ -10,7 +10,7 @@ const archivesList = list_archives({ show_count: false });
     <header class="header">
       <h1 class="header-title center">Archives</h1>
     </header>
-    <div class="archive-container glass-wrapper">    
+    <div class="archive-container glass-wrapper main-content">    
       <%
       // 获取文章列表
       let posts = [];
@@ -60,7 +60,7 @@ const archivesList = list_archives({ show_count: false });
             
             <ul class="archive-post-list">
               <% monthData.posts.forEach(post => { %>
-                <li class="archive-post-item">
+                <li class="archive-post-item glass-wrapper archive-item">
                   <time class="post-date" datetime="<%= post.date.toISOString() %>">
                     <%= post.date.format('MM-DD') %>
                   </time>

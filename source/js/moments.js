@@ -25,6 +25,41 @@ document.addEventListener('DOMContentLoaded', () => {
         loadedBangumiDates: new Set(),
         loadedMastodonDates: new Set(),
     };
+
+    /**
+     * 创建媒体附件的 HTML 结构
+     * @param {Array} mediaAttachments - 媒体附件数组
+     * @param {boolean} isBangumi - 是否为Bangumi条目
+     * @returns {string} - 媒体附件的HTML字符串
+     */
+    const createMediaHtml = (mediaAttachments, isBangumi = false) => {
+        if (!mediaAttachments || mediaAttachments.length === 0) return '';
+        
+        let mediaHtml = '<div class="media-attachments">';
+        const totalImages = mediaAttachments.filter(att => att.type === 'image').length;
+        
+        mediaAttachments.forEach((attachment, index) => {
+            if (attachment.type === 'image' && index < 9) { // 只显示前9张图片
+                // 为超过9张图片的情况添加数量提示
+                const isLastVisible = index === 8 && totalImages > 9;
+                const extraCount = totalImages - 9;
+                
+                mediaHtml += `
+                    <a href="${attachment.url}" target="_blank" rel="noopener noreferrer" class="media-link">
+                        <img src="${attachment.preview_url}" 
+                             alt="${attachment.description || (isBangumi ? '动画封面' : '动态图片')}" 
+                             loading="lazy"
+                             ${isLastVisible ? `data-count="${extraCount}"` : ''}
+                             onload="this.classList.add('loaded')"
+                             onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\\'image-placeholder\\'></div>')">
+                    </a>
+                `;
+            }
+        });
+        mediaHtml += '</div>';
+        return mediaHtml;
+    };
+
     /**
      * 创建 Bangumi 条目的 HTML 结构
      * @param {object} entry - Bangumi 条目
@@ -32,25 +67,45 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     const createBangumiElement = (entry) => {
         const post = document.createElement('div');
-        post.className = 'mastodon-post bangumi-post';
+        post.className = 'mastodon-post bangumi-post glass-wrapper card-item hover-effect';
         post.dataset.url = `https://bgm.tv/subject/${entry.subject_id}`;
-        let img = entry.subject.images?.small || '';
-        let name = entry.subject.name_cn || entry.subject.name;
-        let comment = entry.comment ? `<div class="bangumi-comment">${entry.comment}</div>` : '';
-        let date = formatDate(entry.updated_at);
+        
+        const img = entry.subject.images?.medium || '';
+        const name = entry.subject.name_cn || entry.subject.name;
+        const comment = entry.comment ? `<div class="bangumi-comment">${entry.comment}</div>` : '';
+        const date = formatDate(entry.updated_at);
+        
+        // 将Bangumi图片转换为媒体附件格式
+        const mediaAttachments = img ? [{
+            type: 'image',
+            url: img,
+            preview_url: img,
+            description: name
+        }] : [];
+        
+        const mediaHtml = createMediaHtml(mediaAttachments, true);
+        
         post.innerHTML = `
+            <div class="reblog-header">
+                <span class="reblog-icon">📺</span>
+                <span class="reblog-text">在 Bangumi 上完成了《${name}》</span>
+            </div>
             <div class="post-content">
                 <span class="post-date">${date}</span>
-                <span class="bangumi-title">在 Bangumi 上完成了《${name}》</span>
-                <div class="bangumi-image-wrap">
-                    <img src="${img}" alt="${name}" loading="lazy" class="bangumi-image"/>
-                </div>
+                ${mediaHtml}
                 ${comment}
             </div>
         `;
+        
         post.addEventListener('click', (e) => {
-            if (e.target.tagName === 'IMG') return;
-            window.open(post.dataset.url, '_blank', 'noopener,noreferrer');
+            if (e.target.tagName === 'IMG') {
+                e.preventDefault();
+                showImagePreview(e.target.src, mediaAttachments);
+                return;
+            }
+            if (!e.target.closest('a, img, button')) {
+                window.open(post.dataset.url, '_blank', 'noopener,noreferrer');
+            }
         });
         return post;
     };
@@ -107,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     const createStatusElement = (status) => {
         const post = document.createElement('div');
-        post.className = 'mastodon-post';
+        post.className = 'mastodon-post glass-wrapper card-item hover-effect';
         
         // 判断是否为转发内容
         const isReblog = status.reblog !== null;
@@ -116,31 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 存储原始URL（如果是转发，使用转发的URL）
         post.dataset.url = actualStatus.url;
 
-        let mediaHtml = '';
-        if (actualStatus.media_attachments && actualStatus.media_attachments.length > 0) {
-            mediaHtml = '<div class="media-attachments">';
-            const totalImages = actualStatus.media_attachments.filter(att => att.type === 'image').length;
-            
-            actualStatus.media_attachments.forEach((attachment, index) => {
-                if (attachment.type === 'image' && index < 9) { // 只显示前9张图片
-                    // 为超过9张图片的情况添加数量提示
-                    const isLastVisible = index === 8 && totalImages > 9;
-                    const extraCount = totalImages - 9;
-                    
-                    mediaHtml += `
-                        <a href="${attachment.url}" target="_blank" rel="noopener noreferrer" class="media-link">
-                            <img src="${attachment.preview_url}" 
-                                 alt="${attachment.description || '动态图片'}" 
-                                 loading="lazy"
-                                 ${isLastVisible ? `data-count="${extraCount}"` : ''}
-                                 onload="this.classList.add('loaded')"
-                                 onerror="this.style.display='none'; this.insertAdjacentHTML('afterend', '<div class=\\'image-placeholder\\'></div>')">
-                        </a>
-                    `;
-                }
-            });
-            mediaHtml += '</div>';
-        }
+        const mediaHtml = createMediaHtml(actualStatus.media_attachments);
 
         // 构建HTML内容
         let contentHtml = '';

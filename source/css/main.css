@@ -900,13 +900,27 @@ pre .xml .cdata {
 }
 
 .post code {
+  background-color: #ffffff6b;
+}
+
+.post code {
   font-family: "Roboto Mono", "Menlo", "Consolas", monospace;
   font-size: 13px;
-  background-color: #ffffff6b;
-  backdrop-filter: blur(15px); /* 毛玻璃效果：背景模糊 */
   padding: 3px 10px;
   margin: 0 5px;
   border-radius: 2px;
+}
+
+.post code.glass-wrapper.code-bg {
+  background-color: #ffffff6b;
+}
+
+html[data-theme=dark] .post code {
+  background-color: #0000006b;
+}
+
+html[data-theme=dark] .post code.glass-wrapper.code-bg {
+  background-color: #0000006b;
 }
 
 .post pre {
@@ -1208,15 +1222,7 @@ pre .xml .cdata {
   display: inline-block;
   border-radius: 12px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-  /* 日间模式毛玻璃效果 */
-  background: linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.45));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.08);
   padding-left: 20px;
-  
-  /* 文字颜色 */
   color: #333;
 }
 
@@ -1227,12 +1233,6 @@ pre .xml .cdata {
 }
 
 html[data-theme=dark] .tags-container {
-  /* 深色背景毛玻璃效果 */
-  background: linear-gradient(rgba(40, 40, 40, 0.6), rgba(40, 40, 40, 0.5));
-  /* 深色模式下的阴影 */
-  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.2);
-  /* 边框改为亮色以突出轮廓 */
-  border: 1px solid rgba(255, 255, 255, 0.18);
   /* 文字颜色 */
   color: #f0f0f0;
 }
@@ -1254,23 +1254,9 @@ html[data-theme=dark] .tags-container:hover {
   margin-bottom: 1rem;
   border-radius: 16px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-  
-  /* 日间模式毛玻璃效果 */
-  background: linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.45));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
 }
 
-html[data-theme=dark] .category-item {
-  /* 深色背景毛玻璃效果 */
-  background: linear-gradient(rgba(40, 40, 40, 0.6), rgba(40, 40, 40, 0.5));
-  /* 深色模式下的阴影 */
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  /* 边框改为亮色以突出轮廓 */
-  border: 1px solid rgba(255, 255, 255, 0.18);
-}
+
 
 .category-item:hover {
   transform: translateY(-6px);
@@ -1529,13 +1515,7 @@ html[data-theme=dark] .search-article input[type=search]::-webkit-input-placehol
 }/*# sourceMappingURL=main.css.map */
 
 html[data-theme=dark] .post code {
-  font-family: "Roboto Mono", "Menlo", "Consolas", monospace;
-  font-size: 13px;
   background-color: #0000006b;
-  backdrop-filter: blur(15px); /* 毛玻璃效果：背景模糊 */
-  padding: 3px 10px;
-  margin: 0 5px;
-  border-radius: 2px;
 }
 
 
@@ -1582,16 +1562,15 @@ html[data-theme=dark] .post code {
 
 /* 半透明遮罩层 */
 .overlay {
-  display: none; /* 默认隐藏 */
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 998; /* 确保它覆盖其他内容 */
+  z-index: 998;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(20px); /* 毛玻璃效果：背景模糊 */
 }
 
 /* 目录内容样式 */
@@ -1698,11 +1677,23 @@ html[data-theme=dark] span.comment {
 
 html[data-theme=dark] table tbody tr pre{
   background-color: #0000006b;
-  backdrop-filter: blur(15px); /* 毛玻璃效果：背景模糊 */
 }
+
+html[data-theme=dark] table tbody tr pre.glass-wrapper.pre-bg{
+  background-color: #0000006b;
+}
+
 .post pre{
   background-color: #ffffff6b;
-  backdrop-filter: blur(15px); /* 毛玻璃效果：背景模糊 */
+}
+
+.post pre.glass-wrapper.pre-bg{
+  background-color: #ffffff6b;
+  font-family: "Roboto Mono", "Menlo", "Consolas", monospace;
+  font-size: 13px;
+  overflow-x: auto;
+  text-align: left;
+  line-height: 1.5em;
 }
 span.type{
   color: #0049db;
@@ -1841,23 +1832,9 @@ a:hover::after {
   padding: 0.8rem 1rem;
   border-radius: 16px;
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-  
-  /* 日间模式毛玻璃效果 */
-  background: linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.45));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
 }
 
-html[data-theme=dark] .archive-post-item{
-  /* 深色背景毛玻璃效果 */
-  background: linear-gradient(rgba(40, 40, 40, 0.6), rgba(40, 40, 40, 0.5));
-  /* 深色模式下的阴影 */
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  /* 边框改为亮色以突出轮廓 */
-  border: 1px solid rgba(255, 255, 255, 0.18);
-}
+
 
 .archive-post-item:hover {
   transform: translateY(-6px);
@@ -1987,18 +1964,73 @@ html[data-theme=dark] .archive-post-item:hover {
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
   border-radius: 16px;
   transition: all 0.3s ease;
-  padding: 30px;
-  /* Lowered z-index to allow navbar and trigger to be on top */
+  padding: 20px;
   z-index: 0; 
 }
 
 html[data-theme=dark] .glass-wrapper {
   /* 深色背景毛玻璃效果 */
   background: linear-gradient(rgba(40, 40, 40, 0.6), rgba(40, 40, 40, 0.5));
-  /* 深色模式下的阴影 */
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-  /* 边框改为亮色以突出轮廓 */
   border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* 不同毛玻璃效果变体 */
+.glass-wrapper.card-item {
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.glass-wrapper.archive-item {
+  padding: 0.8rem 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.glass-wrapper.overlay-bg {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 0;
+  border: none;
+  box-shadow: none;
+}
+
+.glass-wrapper.code-bg {
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 3px 10px;
+  margin: 0 5px;
+  border-radius: 2px;
+  font-family: "Roboto Mono", "Menlo", "Consolas", monospace;
+  font-size: 13px;
+}
+
+.glass-wrapper.pre-bg {
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 15px 25px;
+  border-radius: 2px;
+}
+
+.glass-wrapper.hover-effect:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+html[data-theme=dark] .glass-wrapper.hover-effect:hover {
+  box-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.4);
+}
+
+.glass-wrapper.list-hover:hover {
+  transform: translateX(10px);
+  background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.6));
+  padding-left: 15px;
+  padding-right: 15px;
+  box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.1);
+}
+
+html[data-theme=dark] .glass-wrapper.list-hover:hover {
+  background: linear-gradient(rgba(40, 40, 40, 0.7), rgba(40, 40, 40, 0.6));
+  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.3);
 }
 /*----------------------------------以上毛玻璃效果----------------------------*/
 
@@ -2030,13 +2062,6 @@ html[data-theme=dark] .glass-wrapper {
     color: inherit;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-    
-    /* 日间模式毛玻璃效果 */
-    background: linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.45));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
 }
 
 /* 鼠标悬停在卡片上时的效果 */
@@ -2158,19 +2183,12 @@ html[data-theme=dark] .friends-card .friends-avatar {
 /* 文章项悬停效果 */
 .post-item:hover {
   transform: translateX(10px);
-  background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.6));
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   border-radius: 8px;
   padding-left: 15px;
   padding-right: 15px;
-  box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.1);
 }
 
-html[data-theme=dark] .post-item:hover {
-  background: linear-gradient(rgba(40, 40, 40, 0.7), rgba(40, 40, 40, 0.6));
-  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.3);
-}
+
 
 /* 文章标题点击效果 */
 .post-item .post-item-title a {
