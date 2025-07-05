@@ -1966,6 +1966,29 @@ html[data-theme=dark] .archive-post-item:hover {
   transition: all 0.3s ease;
   padding: 20px;
   z-index: 0; 
+  
+  /* 添加渐入动画 */
+  opacity: 0;
+  animation: glassSlideIn 0.8s ease forwards;
+}
+
+/* 为不同的毛玻璃元素添加延迟动画 */
+.glass-wrapper:nth-child(1) { animation-delay: 0.1s; }
+.glass-wrapper:nth-child(2) { animation-delay: 0.2s; }
+.glass-wrapper:nth-child(3) { animation-delay: 0.3s; }
+.glass-wrapper:nth-child(4) { animation-delay: 0.4s; }
+.glass-wrapper:nth-child(5) { animation-delay: 0.5s; }
+
+/* 添加可选的浮动动画类 */
+.glass-wrapper.floating {
+  animation: glassSlideIn 0.8s ease forwards, glassFloat 6s ease-in-out infinite;
+  animation-delay: 0.1s, 1.2s;
+}
+
+/* 添加可选的模糊变化动画类 */
+.glass-wrapper.blur-shifting {
+  animation: glassSlideIn 0.8s ease forwards, blurShift 8s ease-in-out infinite;
+  animation-delay: 0.1s, 1.5s;
 }
 
 html[data-theme=dark] .glass-wrapper {
@@ -1975,62 +1998,34 @@ html[data-theme=dark] .glass-wrapper {
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
-/* 不同毛玻璃效果变体 */
-.glass-wrapper.card-item {
-  padding: 1rem;
-  margin-bottom: 1rem;
-}
-
-.glass-wrapper.archive-item {
-  padding: 0.8rem 1rem;
-  margin-bottom: 1.2rem;
-}
-
-.glass-wrapper.overlay-bg {
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  padding: 0;
-  border: none;
-  box-shadow: none;
-}
-
-.glass-wrapper.code-bg {
+/* 悬停时的增强动画效果 - 使用阴影增强立体抬升感 */
+.glass-wrapper:hover {
+  transform: translateY(-8px) scale(1.02);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  padding: 3px 10px;
-  margin: 0 5px;
-  border-radius: 2px;
-  font-family: "Roboto Mono", "Menlo", "Consolas", monospace;
-  font-size: 13px;
+  box-shadow: 0 16px 48px 0 rgba(31, 38, 135, 0.25), 
+              0 8px 24px 0 rgba(31, 38, 135, 0.15);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.glass-wrapper.pre-bg {
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  padding: 15px 25px;
-  border-radius: 2px;
+html[data-theme=dark] .glass-wrapper:hover {
+  box-shadow: 0 16px 48px 0 rgba(0, 0, 0, 0.5), 
+              0 8px 24px 0 rgba(0, 0, 0, 0.3);
 }
 
-.glass-wrapper.hover-effect:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 32px 0 rgba(31, 38, 135, 0.15);
+/* 焦点时的动画效果 */
+.glass-wrapper:focus-within {
+  animation-play-state: paused;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-color: rgba(33, 150, 243, 0.6);
+  box-shadow: 0 0 20px rgba(33, 150, 243, 0.3);
+  transition: all 0.3s ease;
 }
 
-html[data-theme=dark] .glass-wrapper.hover-effect:hover {
-  box-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.4);
-}
-
-.glass-wrapper.list-hover:hover {
-  transform: translateX(10px);
-  background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.6));
-  padding-left: 15px;
-  padding-right: 15px;
-  box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.1);
-}
-
-html[data-theme=dark] .glass-wrapper.list-hover:hover {
-  background: linear-gradient(rgba(40, 40, 40, 0.7), rgba(40, 40, 40, 0.6));
-  box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.3);
+html[data-theme=dark] .glass-wrapper:focus-within {
+  border-color: rgba(100, 181, 246, 0.6);
+  box-shadow: 0 0 20px rgba(100, 181, 246, 0.3);
 }
 /*----------------------------------以上毛玻璃效果----------------------------*/
 
@@ -2325,3 +2320,329 @@ html[data-theme=dark] .friends-card .friends-avatar {
   }
 }
 /*----------------------------------以上移动设备显示优化----------------------------*/
+
+/*----------------------------------主页文章列表过渡动画----------------------------------*/
+/* 主页文章列表项的基础过渡效果 */
+.post-item {
+  display: flex;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  transform: translateY(20px);
+  opacity: 0;
+  animation: slideInUp 0.6s ease forwards;
+  transition: all 0.3s ease;
+}
+
+/* 为每个文章项添加递延动画效果 */
+.post-item:nth-child(1) { animation-delay: 0.1s; }
+.post-item:nth-child(2) { animation-delay: 0.2s; }
+.post-item:nth-child(3) { animation-delay: 0.3s; }
+.post-item:nth-child(4) { animation-delay: 0.4s; }
+.post-item:nth-child(5) { animation-delay: 0.5s; }
+.post-item:nth-child(6) { animation-delay: 0.6s; }
+.post-item:nth-child(7) { animation-delay: 0.7s; }
+.post-item:nth-child(8) { animation-delay: 0.8s; }
+.post-item:nth-child(9) { animation-delay: 0.9s; }
+.post-item:nth-child(10) { animation-delay: 1.0s; }
+
+/* 文章项悬停效果 */
+.post-item:hover {
+  transform: translateX(10px);
+  border-radius: 8px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+
+
+/* 文章标题点击效果 */
+.post-item .post-item-title a {
+  color: #434648;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.post-item .post-item-title a:hover, 
+.post-item .post-item-title a:focus {
+  color: #0d122b;
+  transform: scale(1.02);
+}
+
+html[data-theme=dark] .post-item .post-item-title a:hover, 
+html[data-theme=dark] .post-item .post-item-title a:focus {
+  color: #eaeaea;
+}
+
+/* 点击时的反馈效果 */
+.post-item .post-item-title a:active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+/* 滑入动画 */
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 文章日期的动画效果 */
+.post-item .post-item-date {
+  min-width: 96px;
+  color: #0d122b;
+  font-weight: 700;
+  padding-right: 10px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.post-item:hover .post-item-date {
+  color: #f66;
+  transform: scale(1.05);
+}
+
+html[data-theme=dark] .post-item:hover .post-item-date {
+  color: #ff5277;
+}
+/*----------------------------------以上主页文章列表过渡动画----------------------------------*/
+
+/*----------------------------------页面切换过渡动画----------------------------------*/
+/* 页面容器基础样式 */
+/* .wrapper {
+  max-width: calc(720px - 30px * 2);
+  position: relative;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 30px;
+  padding-left: 30px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: pageEnter 0.8s ease forwards;
+} */
+
+/* 页面进入动画 */
+@keyframes pageEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 页面退出动画（通过 JavaScript 触发） */
+.page-exit {
+  animation: pageExit 0.4s ease forwards;
+}
+
+@keyframes pageExit {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px) scale(1.02);
+  }
+}
+
+/* 内容区域的渐入效果 */
+/* .post, .archive-container, .categories-grid, .friends-container {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: contentFadeIn 1s ease forwards;
+  animation-delay: 0.3s;
+} */
+
+@keyframes contentFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 导航栏的滑入效果 */
+.navbar {
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: navSlideIn 0.6s ease forwards;
+  animation-delay: 0.1s;
+}
+
+@keyframes navSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 作者信息区域的动画 */
+.author {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: authorSlideIn 0.8s ease forwards;
+  animation-delay: 0.2s;
+}
+
+@keyframes authorSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 链接点击时的涟漪效果 */
+a {
+  position: relative;
+  overflow: hidden;
+}
+
+a::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 82, 119, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+  z-index: -1;
+}
+
+a:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+html[data-theme=dark] a::before {
+  background: rgba(255, 82, 119, 0.2);
+}
+
+/* 平滑滚动 */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 页面切换时的模糊效果 */
+.page-transition {
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.page-transition.blur {
+  /* filter: blur(5px); */
+  transform: scale(1.02);
+}
+
+/* 移动设备上的优化 */
+@media screen and (max-width: 768px) {
+  .post-item:hover {
+    transform: translateX(5px);
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .header-title {
+    animation: none;
+    border-right: none;
+    white-space: normal;
+  }
+  
+  /* 减少移动设备上的动画延迟 */
+  .post-item:nth-child(n) { 
+    animation-delay: 0.1s; 
+  }
+}
+
+/* 减少动画的用户偏好支持 */
+@media (prefers-reduced-motion: reduce) {
+  .post-item,
+  .wrapper,
+  .navbar,
+  .author,
+  .post,
+  .archive-container,
+  .categories-grid,
+  .friends-container {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  
+  .header-title {
+    animation: none;
+    border-right: none;
+  }
+  
+  a::before {
+    display: none;
+  }
+}
+/*----------------------------------以上页面切换过渡动画----------------------------------*/
+
+/*----------------------------------毛玻璃效果动画增强----------------------------*/
+
+/* 毛玻璃元素的渐入动画 */
+@keyframes glassSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+  50% {
+    opacity: 0.7;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+/* 微妙的浮动动画 - 可选效果 */
+@keyframes glassFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+/* 模糊效果渐变动画 - 可选效果 */
+@keyframes blurShift {
+  0%, 100% {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  50% {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+/* 注意：已移除呼吸动画(glassBorderPulse)和颜色变化动画(glassColorShift)以简化效果 */
