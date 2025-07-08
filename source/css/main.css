@@ -2000,7 +2000,7 @@ html[data-theme=dark] .glass-wrapper {
 
 /* 悬停时的增强动画效果 - 使用阴影增强立体抬升感 */
 .glass-wrapper:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-10px) scale(1.01);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   box-shadow: 0 16px 48px 0 rgba(31, 38, 135, 0.25), 
@@ -2013,20 +2013,6 @@ html[data-theme=dark] .glass-wrapper:hover {
               0 8px 24px 0 rgba(0, 0, 0, 0.3);
 }
 
-/* 焦点时的动画效果 */
-.glass-wrapper:focus-within {
-  animation-play-state: paused;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  border-color: rgba(33, 150, 243, 0.6);
-  box-shadow: 0 0 20px rgba(33, 150, 243, 0.3);
-  transition: all 0.3s ease;
-}
-
-html[data-theme=dark] .glass-wrapper:focus-within {
-  border-color: rgba(100, 181, 246, 0.6);
-  box-shadow: 0 0 20px rgba(100, 181, 246, 0.3);
-}
 /*----------------------------------以上毛玻璃效果----------------------------*/
 
 /*----------------------------------分类页面分列----------------------------*/
@@ -2319,7 +2305,7 @@ html[data-theme=dark] .friends-card .friends-avatar {
     padding: 0 10px;
   }
 }
-/*----------------------------------以上移动设备显示优化----------------------------*/
+/*----------------------------------以上移动设备显示优化*/
 
 /*----------------------------------主页文章列表过渡动画----------------------------------*/
 /* 主页文章列表项的基础过渡效果 */
@@ -2565,7 +2551,7 @@ html {
   .header-title {
     animation: none;
     border-right: none;
-    white-space: normal;
+       white-space: normal;
   }
   
   /* 减少移动设备上的动画延迟 */
@@ -2598,7 +2584,7 @@ html {
     display: none;
   }
 }
-/*----------------------------------以上页面切换过渡动画----------------------------------*/
+/*----------------------------------以上页面切换过渡动画*/
 
 /*----------------------------------毛玻璃效果动画增强----------------------------*/
 
@@ -2646,3 +2632,128 @@ html {
 }
 
 /* 注意：已移除呼吸动画(glassBorderPulse)和颜色变化动画(glassColorShift)以简化效果 */
+
+/* Waline 评论系统样式调整 */
+.waline-container {
+    margin-top: 2rem;
+    animation-delay: 0.6s;
+    color: inherit; /* 继承主题颜色 */
+}
+
+/* Waline 内部元素继承毛玻璃效果和颜色 */
+.waline-container .wl-editor {
+    background: inherit !important;
+    border: inherit !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    color: inherit !important; /* 继承主题颜色 */
+}
+
+.waline-container .wl-editor textarea {
+    color: inherit !important; /* 输入框文字颜色 */
+}
+
+.waline-container .wl-editor:focus-within {
+    transform: translateY(-2px) !important;
+}
+
+/* 评论列表项使用更浅的透明度 */
+.waline-container .wl-card {
+    background: rgba(255, 255, 255, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 10px !important;
+    margin-bottom: 1rem !important;
+    padding: 16px !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    transition: all 0.3s ease !important;
+    color: inherit !important; /* 继承主题颜色 */
+}
+
+.waline-container .wl-card:hover {
+    transform: translateY(-3px) !important;
+    background: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Waline 所有文字元素颜色适配 */
+.waline-container .wl-nick,
+.waline-container .wl-time,
+.waline-container .wl-content,
+.waline-container .wl-admin-actions,
+.waline-container .wl-comment-actions,
+.waline-container .wl-meta,
+.waline-container .wl-user,
+.waline-container .wl-info,
+.waline-container .wl-count {
+    color: inherit !important;
+}
+
+/* Waline 链接颜色 */
+.waline-container a {
+    color: inherit !important;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.waline-container a:hover {
+    opacity: 1;
+}
+
+/* Waline 按钮样式调整 */
+.waline-container .wl-btn {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-radius: 8px !important;
+    backdrop-filter: blur(6px) !important;
+    -webkit-backdrop-filter: blur(6px) !important;
+    transition: all 0.3s ease !important;
+    color: inherit !important; /* 按钮文字颜色 */
+}
+
+.waline-container .wl-btn:hover {
+    background: rgba(255, 255, 255, 0.4) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* 暗色主题调整 */
+html[data-theme=dark] .waline-container .wl-card {
+    background: rgba(40, 40, 40, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+html[data-theme=dark] .waline-container .wl-card:hover {
+    background: rgba(40, 40, 40, 0.4) !important;
+}
+
+html[data-theme=dark] .waline-container .wl-btn {
+    background: rgba(40, 40, 40, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+html[data-theme=dark] .waline-container .wl-btn:hover {
+    background: rgba(40, 40, 40, 0.5) !important;
+}
+
+/* 确保所有 Waline 元素都继承主题颜色 */
+html[data-theme=dark] .waline-container,
+html[data-theme=dark] .waline-container *:not(.wl-emoji) {
+    color: #c7bebe !important;
+}
+
+/* 占位符文字颜色 */
+.waline-container .wl-editor textarea::placeholder {
+    color: inherit !important;
+    opacity: 0.6;
+}
+
+html[data-theme=dark] .waline-container .wl-editor textarea::placeholder {
+    color: #c7bebe !important;
+    opacity: 0.6;
+}
+
+/* 调整评论区容器样式 */
+.dis {
+    margin-top: 2rem;
+}
+
+/*----------------------------------以上Waline评论系统样式调整----------------------------------*/
