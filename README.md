@@ -1,4 +1,6 @@
 # 使用文档
+修改太多了，不继续使用这个 fork，新开了一个主题 [hexo-theme-Klise-glassy](https://github.com/RichardTang2003/hexo-theme-Klise-glassy)
+
 ## 说明
 
 本主题是根据 dewjonh 的 hexo 主题 [Klise](https://github.com/dewjohn/hexo-theme-Klise) 改的，为了适应不同种类的背景图片，大量运用毛玻璃效果作为文字背景。此外用 AI 写了一些基础的渐入渐出动画，看起来不那么像一个“静态”网页了。
